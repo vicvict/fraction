@@ -1,16 +1,18 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-#include "drob.h"
+#include "fraction.h"
 
 
 int main()
 {
-    Drobi < double > drob1,drob2;
+    Fraction < int > drob1,drob2,drob3;
     cin >> drob1;
     cin >> drob2;
-    drob1 = drob1 - drob2;
-    cout << drob1;
+    drob3 /= drob2;
+    cout << drob2 << "\n";
+    cout << drob1 << "\n";
     return 0;
 }
