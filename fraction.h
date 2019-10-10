@@ -1,13 +1,12 @@
 #pragma once
 
-#define N 10000
-
 template < class T >
 class Fraction
 {
 private:
     T numerate;
     T denumerate;
+    static const int N = 10000;
 protected:
     void reduction ();
 public:
