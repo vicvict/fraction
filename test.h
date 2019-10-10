@@ -7,6 +7,16 @@ bool Testlib::__assert_throw_exception = true;
 bool Testlib::__test_print_to_stderr   = true;
 bool Testlib::__test_throw_exception   = false;
 
+void Test1();
+void Test2();
+void Test3();
+void Test4();
+void Test5();
+void Test6();
+void Test7();
+void Test8();
+void TestAll();
+
 void Test1() {
     {
         Fraction < int > frac1;
@@ -44,11 +54,26 @@ void Test1() {
         ASSERT_MSG(frac1.get_denumerate() == 1, "denumerate is equal to 1");
     }
     {
+        Fraction < int > frac1 (1.5);
+        ASSERT_MSG(frac1.get_numerate() == 3, "numerate is equal to 3");
+        ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
+    }
+    {
+        Fraction < int > frac1 (1.5);
+        ASSERT_MSG(frac1.get_numerate() == 3, "numerate is equal to 3");
+        ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
+    }
+    {
         Fraction < int > frac1 (7,2);
         Fraction < int > frac2(frac1);
         ASSERT_MSG(frac1.get_numerate() == 7, "numerate is equal to 7");
         ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
     }
+	{
+		Fraction < int > frac1(1.5);
+		ASSERT_MSG(frac1.get_numerate() == 3, "numerate is eqal to 3");
+		ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
+	}
 }
 
 void Test2() {
@@ -65,7 +90,7 @@ void Test3(){
     {
         ASSERT_MSG(Fraction < int > (7,3) > Fraction < int > (5,3), "7,3 is more than 5/3");
         ASSERT_MSG(Fraction < int > (-5,2) > -3 , "-5/2 is more than -3");
-        ASSERT_MSG(4 > Fraction < int > (0,100) , "4 is more than 0/100");
+        ASSERT_MSG(5 > Fraction < int > (0,100) , "4 is more than 0/100");
         ASSERT_MSG(Fraction < int > (6,3) >= 2 , "6/3 is more or equal to 2");
         ASSERT_MSG(Fraction < int > (6,3) >= Fraction < int > (12,6) , "6/3 is more or equal to 12/6");
         ASSERT_MSG(Fraction < int > (7,3) >= 2 , "7/3 is more or equal to 2");
@@ -160,6 +185,8 @@ void Test6(){
         ASSERT_MSG(frac2 == Fraction < int > (9,4), "I changed");
         frac4.square();
         ASSERT_MSG( frac4 == Fraction < int > (4,9) , "(-2/3)^2 is equal to 4/9");
+        frac4.sqrt();
+        ASSERT_MSG( frac4 == Fraction < int > (2,3) , "sqrt(4/9) is equal to 2/3");
     }
 }
 
@@ -194,6 +221,7 @@ void Test8 ()
         ASSERT_MSG((frac2 = 3) == 3 , " 3 is equal to 3");
     }
 }
+
 void TestAll() {
     Testlib::Test test;
     RUN_TEST_MSG(test, Test1, "Construction check");

@@ -1,5 +1,7 @@
 #pragma once
 
+#define N 10000
+
 template < class T >
 class Fraction
 {
@@ -14,6 +16,7 @@ public:
     Fraction (const T &new_numerate, const T &new_denumerate);
     Fraction (const Fraction < T > &new_fraction);
     Fraction (const T &new_fraction);
+    Fraction (const double &new_fraction);
 
     void set_numerate(const T &new_numerate);
     void set_denumerate(const T &new_denumerate);
@@ -34,8 +37,8 @@ public:
     template < class V >
     friend Fraction < V > operator + (const Fraction < V > &lhs , const V &rhs);
 
-    Fraction < T > operator = (const Fraction < T > &rhs);
-    Fraction < T > operator = (const T &rhs);
+    Fraction < T > &operator = (const Fraction < T > &rhs);
+    Fraction < T > &operator = (const T &rhs);
 
     template < class V >
     friend Fraction < V > operator - (const Fraction < V > &lhs , const Fraction < V > &rhs);
@@ -68,8 +71,8 @@ public:
     Fraction < T > operator /= (const T &rhs);
     Fraction < T > operator -();
     Fraction < T > operator +();
-    Fraction < T > operator --();
-    Fraction < T > operator ++();
+    Fraction < T >& operator --();
+    Fraction < T >& operator ++();
     Fraction < T > operator --(int);
     Fraction < T > operator ++(int);
 
@@ -113,32 +116,30 @@ public:
     friend bool operator <= (const Fraction < V > &lhs , const V &rhs);
 
     void square();
+    void sqrt();
 };
 
 template < class T >
-Fraction <T> :: Fraction(){
-    numerate = 0;
-    denumerate = 1;
+Fraction <T> :: Fraction(): numerate(0), denumerate(1){
 }
 
 template < class T >
-Fraction <T> :: Fraction(const T &new_numerate, const T &new_denumerate){
-    numerate = new_numerate;
-    denumerate = new_denumerate;
+Fraction <T> :: Fraction(const T &new_numerate, const T &new_denumerate): numerate(new_numerate) , denumerate(new_denumerate){
     reduction();
 }
 
 template < class T >
-Fraction <T> :: Fraction(const Fraction < T > &new_fraction ){
-    numerate = new_fraction.numerate;
-    denumerate = new_fraction.denumerate;
+Fraction <T> :: Fraction(const Fraction < T > &new_fraction ) : numerate(new_fraction.numerate) ,denumerate(new_fraction.denumerate){
     reduction();
 }
 
 template < class T >
-Fraction < T > :: Fraction(const T &new_fraction){
-    numerate = new_fraction;
-    denumerate = 1;
+Fraction < T > :: Fraction(const T &new_fraction) : numerate(new_fraction) , denumerate(1){
+    reduction();
+}
+
+template < class T >
+Fraction < T > :: Fraction(const double &new_fraction) : numerate(new_fraction*N) , denumerate(N){
     reduction();
 }
 
@@ -181,7 +182,7 @@ void Fraction < T > ::reduction (){
         T old_denumerate = denumerate;
         while (old_denumerate){
             old_numerate %= old_denumerate;
-            swap (old_numerate, old_denumerate);
+            std::swap (old_numerate, old_denumerate);
         }
         numerate = numerate/old_numerate;
         denumerate = denumerate/old_numerate;
@@ -223,7 +224,7 @@ std::ostream& operator << (std::ostream &out, const Fraction <T>  &Fraction)
 }
 
 template < class T >
-Fraction <T> Fraction <T>::operator = (const Fraction <T> &rhs){
+Fraction <T> &Fraction <T>::operator = (const Fraction <T> &rhs){
     if (this == &rhs) {
         return *this;
     }
@@ -233,7 +234,7 @@ Fraction <T> Fraction <T>::operator = (const Fraction <T> &rhs){
 }
 
 template < class T >
-Fraction <T> Fraction <T>::operator = (const T &rhs){
+Fraction <T> &Fraction <T>::operator = (const T &rhs){
     numerate = rhs;
     denumerate = 1;
     return *this;
@@ -361,13 +362,13 @@ Fraction < T > Fraction < T >::operator /= (const T &rhs){
 }
 
 template < class T >
-Fraction < T > Fraction < T >::operator --(){
+Fraction < T >& Fraction < T >::operator --(){
     numerate = numerate - denumerate;
     return *this;
 }
 
 template < class T >
-Fraction < T > Fraction < T >::operator ++(){
+Fraction < T >& Fraction < T >::operator ++(){
     numerate = numerate + denumerate;
     return *this;
 }
@@ -488,6 +489,15 @@ bool operator <= (const Fraction < T > & lhs, const T &rhs){
 template < class T >
 void Fraction < T > :: square(){
     *this *= *this;
+    return;
+}
+
+template < class T >
+void Fraction < T > :: sqrt() {
+    double a = std::sqrt(numerate);
+    double b = std::sqrt(denumerate);
+    Fraction < int > frac1(a),frac2(b);
+    *this = frac1/frac2;
     return;
 }
 
