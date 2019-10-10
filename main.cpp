@@ -16,9 +16,6 @@
 
 int main()
 {
-	Fraction < int > frac1(1, 1);
-	std::cout << frac1;
     TestAll();
-	system("pause");
     return 0;
 }
