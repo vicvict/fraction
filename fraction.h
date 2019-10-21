@@ -139,6 +139,10 @@ Fraction < T > :: Fraction(const T &new_fraction) : numerate(new_fraction) , den
 
 template < class T >
 Fraction < T > :: Fraction(const double &new_fraction) : numerate(new_fraction*N) , denumerate(N){
+    if (new_fraction > N)
+    {
+        throw std::runtime_error("Too big number");
+    }
     reduction();
 }
 
@@ -170,7 +174,8 @@ template < class T >
 void Fraction < T > ::reduction (){
     if (denumerate == 0)
     {
-        throw -1;
+        std::cout << "KBA KBA\n";
+        throw std::runtime_error("Denumerate can't be zero");
     }
     if (numerate == 0){
         denumerate = 1;
@@ -198,11 +203,6 @@ double Fraction < T >::todouble(){
     return (double_numerate / denumerate);
 }
 
-/*template < class T >
-pair < int , Fraction < T > > Fraction < T >::tot(){
-    int full = numerate / denumerate;
-    return (full , Fraction (numerate % denumerate, denumerate));
-}*/
 
 template < class T >
 std::istream  & operator >>(std::istream  &in, Fraction <T> &Fraction)
@@ -323,9 +323,6 @@ Fraction < T > Fraction < T >::operator += (const T &rhs){
 
 template < class T >
 Fraction < T > Fraction < T >::operator -= (const Fraction < T > &rhs){
-  //  numerate = numerate * rhs.denumerate - denumerate * rhs.numerate;
-   // denumerate = denumerate * rhs.denumerate;
-  //  reduction();
     return *this = *this - rhs;
 }
 
@@ -336,9 +333,6 @@ Fraction < T > Fraction < T >::operator -= (const T &rhs){
 
 template < class T >
 Fraction < T > Fraction < T >::operator *= (const Fraction < T > &rhs){
-   // numerate = numerate * rhs.numerate;
-   // denumerate = denumerate * rhs.denumerate;
-   // reduction();
     return *this = *this * rhs;
 }
 
@@ -349,9 +343,6 @@ Fraction < T > Fraction < T >::operator *= (const T &rhs){
 
 template < class T >
 Fraction < T > Fraction < T >::operator /= (const Fraction < T > &rhs){
-        //numerate = numerate * rhs.denumerate;
-        //denumerate = denumerate * rhs.numerate;
-        //reduction();
         return *this = *this/rhs;
 }
 
@@ -493,6 +484,10 @@ void Fraction < T > :: square(){
 
 template < class T >
 void Fraction < T > :: sqrt() {
+    if ((numerate > N*N) || (denumerate > N * N))
+    {
+        throw std::runtime_error("To big number");
+    }
     double a = std::sqrt(numerate);
     double b = std::sqrt(denumerate);
     Fraction < int > frac1(a),frac2(b);

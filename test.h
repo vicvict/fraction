@@ -59,21 +59,16 @@ void Test1() {
         ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
     }
     {
-        Fraction < int > frac1 (1.5);
-        ASSERT_MSG(frac1.get_numerate() == 3, "numerate is equal to 3");
-        ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
-    }
-    {
         Fraction < int > frac1 (7,2);
         Fraction < int > frac2(frac1);
         ASSERT_MSG(frac1.get_numerate() == 7, "numerate is equal to 7");
         ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
     }
 	{
-		Fraction < int > frac1(1.5);
-		ASSERT_MSG(frac1.get_numerate() == 3, "numerate is eqal to 3");
-		ASSERT_MSG(frac1.get_denumerate() == 2, "denumerate is equal to 2");
-	}
+        Fraction < int > frac1 (7,2);
+        double a = frac1.todouble();
+        ASSERT_MSG(a == 3.5, "Normally return double");
+    }
 }
 
 void Test2() {
